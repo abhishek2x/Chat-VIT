@@ -19,21 +19,31 @@ const LoginScreen = ({ navigation }) => {
     return unsubscribe
   }, [])
 
+  // useEffect(() => {
+  //   console.log(email)
+  //   console.log(password)
+  // }, [email, password])
+
+
   const signin = () => {
+    // let password1 = password.trim();
+    // let email1 = email.trim();
+    console.log(email);
+    console.log(password);
     auth
-    .signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      var userLoggedIn = userCredential.user;
-      console.log("Loggedin user", userLoggedIn)
-      alert('User Logged in')
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode)
-      console.log(errorMessage)
-      alert(errorMessage)
-    })
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        var userLoggedIn = userCredential.user;
+        console.log("Loggedin user", userLoggedIn)
+        alert('User Logged in')
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode)
+        console.log(errorMessage)
+        alert(errorMessage)
+      })
   }
 
   return (
@@ -52,14 +62,14 @@ const LoginScreen = ({ navigation }) => {
           // autoFocus
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChangeText={(currentText) => setEmail(currentText)}
         />
         <Input
           placeholder="Password"
           secureTextEntry
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChangeText={(currentText) => setPassword(currentText)}
         />
       </View>
       <Button

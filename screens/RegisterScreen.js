@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { KeyboardAvoidingView } from 'react-native'
 import { StyleSheet, View } from 'react-native'
 import { Button, Input, Text } from 'react-native-elements'
@@ -17,6 +17,11 @@ const RegisterScreen = ({ navigation }) => {
     })
   }, [navigation])
 
+
+  useEffect(() => {
+    console.log(email)
+    console.log(password)
+  }, [email, password])
 
   const register = () => {
     auth.createUserWithEmailAndPassword(email, password)
@@ -47,20 +52,20 @@ const RegisterScreen = ({ navigation }) => {
           // autoFocus
           type="text"
           value={fullname}
-          onChange={(e) => setFullname(e.target.value)}
+          onChangeText={(currentText) => setFullname(currentText)}
         />
         <Input
           placeholder="Email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChangeText={(currentText) => setEmail(currentText)}
         />
         <Input
           placeholder="Password"
           secureTextEntry
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChangeText={(currentText) => setPassword(currentText)}
         />
       </View>
       <Button
