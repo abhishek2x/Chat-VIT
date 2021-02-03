@@ -80,7 +80,7 @@ const ChatScreen = ({ navigation, route }) => {
       )
 
     })
-  }, [navigation])
+  }, [navigation, messages])
 
   const sendMessage = () => {
     Keyboard.dismiss()
@@ -92,7 +92,8 @@ const ChatScreen = ({ navigation, route }) => {
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         displayName: auth.currentUser.displayName || '',
         email: auth.currentUser.email,
-        photoURL: auth.currentUser.photoURL || ''
+        photoURL: auth.currentUser.photoURL || '',
+        message: input
       })
 
     setInput('')
@@ -103,7 +104,7 @@ const ChatScreen = ({ navigation, route }) => {
       .collection('chats')
       .doc(route.params.id)
       .collection('messages')
-      .orderBy('timestamp', 'desc')
+      .orderBy('timestamp', 'asc')
       .onSnapshot((snapshot) => {
         setMessages(
           snapshot.docs.map((doc) => ({
@@ -120,7 +121,7 @@ const ChatScreen = ({ navigation, route }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar style="light" />
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? "padding" : "height"}
+        // behavior={Platform.OS === 'ios' ? "padding" : "height"}
         style={styles.container}
         keyboardVerticalOffset={90}
       >
@@ -132,11 +133,9 @@ const ChatScreen = ({ navigation, route }) => {
                 <View key={id} style={styles.receiver}>
                   <Avatar
                     rounded
-                    size={30}
-                    source={{
-                      uri: data.photoURL
-                    }}
+                    source={{ uri: data.photoURL }}
                     position="absolute"
+                    size={30}
                     bottom={-15}
                     right={-5}
                     // for web
@@ -147,29 +146,30 @@ const ChatScreen = ({ navigation, route }) => {
                     }}
                   />
                   <Text style={styles.receiverText} >
-                    {data.messages}
+                    {data.message}
+                  </Text>
+                  <Text style={styles.receiverName} >
+                    {data.displayName}
                   </Text>
                 </View>
               ) : (
                   <View key={id} style={styles.sender}>
                     <Avatar
                       rounded
-                      size={30}
-                      source={{
-                        uri: data.photoURL
-                      }}
+                      source={{ uri: data.photoURL }}
                       position="absolute"
+                      size={30}
                       bottom={-15}
-                      right={-5}
+                      left={-5}
                       // for web
                       containerStyle={{
                         position: 'relative',
                         bottom: -15,
-                        right: -5
+                        left: -5
                       }}
                     />
                     <Text style={styles.sendersText} >
-                      {data.messages}
+                      {data.message}
                     </Text>
                     <Text style={styles.sendersName} >
                       {data.displayName}
@@ -181,6 +181,7 @@ const ChatScreen = ({ navigation, route }) => {
           <View style={styles.footer}>
             <TextInput
               placeholder="Enter a message"
+              value={input}
               style={styles.textInput}
               onSubmitEditing={sendMessage}
               onChangeText={(text) => setInput(text)}
@@ -208,23 +209,6 @@ export default ChatScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  footer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    padding: 15
-  },
-  textInput: {
-    bottom: 0,
-    height: 40,
-    flex: 1,
-    marginRight: 15,
-    borderColor: 'transparent',
-    backgroundColor: '#ECECEC',
-    padding: 10,
-    color: 'grey',
-    borderRadius: 30
   },
   receiver: {
     padding: 15,
@@ -261,5 +245,22 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontSize: 10,
     color: 'white'
-  }
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    padding: 15
+  },
+  textInput: {
+    bottom: 0,
+    height: 40,
+    flex: 1,
+    marginRight: 15,
+    borderColor: 'transparent',
+    backgroundColor: '#ECECEC',
+    padding: 10,
+    color: 'grey',
+    borderRadius: 30
+  },
 })
