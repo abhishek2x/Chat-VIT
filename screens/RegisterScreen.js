@@ -45,7 +45,7 @@ const RegisterScreen = ({ navigation }) => {
   return (
     <KeyboardAvoidingView behavior="padding" enabled style={styles.container}>
       <StatusBar style="light" />
-      <Text h3 style={{ marginBottom: 50 }}>Create a Chat VIT account</Text>
+      <Text h3 style={{ marginBottom: 50 }}>Create a Let's Chat account</Text>
       <View style={styles.inputContainer}>
         <Input
           placeholder="Full Name"
