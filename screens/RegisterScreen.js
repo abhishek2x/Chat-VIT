@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { KeyboardAvoidingView } from 'react-native'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, TextInput } from 'react-native'
 import { Button, Input, Text } from 'react-native-elements'
 import { auth } from "../firebase-config"
 
@@ -62,8 +62,7 @@ const RegisterScreen = ({ navigation }) => {
         />
         <Input
           placeholder="Password"
-          secureTextEntry
-          type="password"
+          secureTextEntrysecureTextEntry={true}
           value={password}
           onChangeText={(currentText) => setPassword(currentText)}
         />
