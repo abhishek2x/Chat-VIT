@@ -1,6 +1,6 @@
 # ChatVIT
 
-**A conversational app for VIT Bhopal University**. This is not an official Applicaiton for VIT University, just a demo application for learning purpose.
+**A demo conversational app**. This is just a demo application for learning purpose.
 
 <div align="center">
 
